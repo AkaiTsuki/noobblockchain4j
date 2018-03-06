@@ -11,6 +11,8 @@ import java.util.List;
 public class BlockChain {
     private List<Block> chain = new ArrayList<Block>();
 
+    public static int difficulty = 5;
+
     public void addBlock(Block block) {
         chain.add(block);
     }

@@ -28,6 +28,8 @@ public class Block {
      */
     private long timestamp;
 
+    private int nonce;
+
     public Block(String data, String previousHash) {
         this.previousHash = previousHash;
         this.data = data;
@@ -36,7 +38,16 @@ public class Block {
     }
 
     public String calculateHash() {
-        return CredUtil.applySha256(previousHash + Long.toString(timestamp) + data);
+        return CredUtil.applySha256(previousHash + Long.toString(timestamp) + Integer.toString(nonce) + data);
+    }
+
+    public void mineBlock(int difficulty) {
+        String target = new String(new char[difficulty]).replace('\0', '0');
+        while(!hash.substring(0, difficulty).equals(target)) {
+            nonce++;
+            hash = calculateHash();
+        }
+        System.out.println("Mine a new Block: "+hash);
     }
 
     public String getHash() {
@@ -78,6 +89,7 @@ public class Block {
                 ", previousHash='" + previousHash + '\'' +
                 ", data='" + data + '\'' +
                 ", timestamp=" + timestamp +
+                ", nonce=" + nonce +
                 '}';
     }
 }

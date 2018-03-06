@@ -5,11 +5,16 @@ package io.akaitsuki.noobblockchain;
  */
 public class Main {
     public static void main(String[] args) {
-        Block b1 = new Block("first block is genesis block", "0");
-        Block b2 = new Block("second block", b1.getHash());
-        Block b3 = new Block("third block", b2.getHash());
-
         BlockChain blockChain = new BlockChain();
+
+        Block b1 = new Block("first block is genesis block", "0");
+        b1.mineBlock(BlockChain.difficulty);
+        Block b2 = new Block("second block", b1.getHash());
+        b2.mineBlock(BlockChain.difficulty);
+        Block b3 = new Block("third block", b2.getHash());
+        b3.mineBlock(BlockChain.difficulty);
+
+
         blockChain.addBlock(b1);
         blockChain.addBlock(b2);
         blockChain.addBlock(b3);

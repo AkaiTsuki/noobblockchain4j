@@ -1,7 +1,8 @@
 package io.akaitsuki.noobblockchain;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
+import java.security.*;
+import java.util.Base64;
 
 /**
  * Created by jiachiliu on 3/6/18.
@@ -24,5 +25,32 @@ public class CredUtil {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String getKeyString(Key key) {
+        return Base64.getEncoder().encodeToString(key.getEncoded());
+    }
+
+    public static byte[] applyECDSASig(PrivateKey key, String data) {
+        try {
+            Signature dsa = Signature.getInstance("ECDSA", "BC");
+            dsa.initSign(key);
+            dsa.update(data.getBytes());
+            return dsa.sign();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean verifyECDSASig(PublicKey key, String data, byte[] signature) {
+        try {
+            Signature dsa = Signature.getInstance("ECDSA", "BC");
+            dsa.initVerify(key);
+            dsa.update(data.getBytes());
+            return dsa.verify(signature);
+        }  catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

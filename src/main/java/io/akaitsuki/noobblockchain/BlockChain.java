@@ -9,7 +9,7 @@ import java.util.List;
  * Created by jiachiliu on 3/6/18.
  */
 public class BlockChain {
-    private List<Block> chain = new ArrayList<Block>();
+    private List<Block> chain = new ArrayList<>();
 
     public static int difficulty = 5;
 
